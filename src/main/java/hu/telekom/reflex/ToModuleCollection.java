@@ -46,12 +46,16 @@ public final class ToModuleCollection implements Collection<Module> {
 
     @Override
     public boolean contains(final Object o) {
-        return this.dataMap.entrySet().stream().anyMatch(
-                e -> new DefaultModule(
-                        e.getKey(),
-                        new HashSet<>(e.getValue())
-                ).equals(o)
-        );
+        if (!this.cached) {
+            this.cachedModules = this.dataMap.entrySet().stream()
+                    .map(e -> (Module) new DefaultModule(
+                            e.getKey(),
+                            new HashSet<>(e.getValue())
+                    ))
+                    .collect(Collectors.toList());
+            this.cached = true;
+        }
+        return this.cachedModules.contains(o);
     }
 
     @Override
