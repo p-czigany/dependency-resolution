@@ -92,6 +92,21 @@ class ToModuleCollectionTest {
     }
 
     @Nested
+    class ClearAndContains {
+        @Test
+        void clearAndContains() {
+            final Collection<Module> objectUnderTest =
+                    new ToModuleCollection(Map.of(5, List.of(0, 2)));
+            objectUnderTest.clear();
+            MatcherAssert.assertThat(
+                    "emptiness is not answered correctly",
+                    objectUnderTest.contains(new DefaultModule(5, Set.of(2, 0))),
+                    Matchers.is(false)
+            );
+        }
+    }
+
+    @Nested
     class IteratorMethod {
         @Test
         void testIteratorUnordered() {
