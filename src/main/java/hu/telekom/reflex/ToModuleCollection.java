@@ -18,83 +18,70 @@ public final class ToModuleCollection implements Collection<Module> {
 
     @Override
     public int size() {
-        this.cacheModules();
-        return this.cachedModules.size();
+        return this.cachedModules().size();
     }
 
     @Override
     public boolean isEmpty() {
-        this.cacheModules();
-        return this.cachedModules.isEmpty();
+        return this.cachedModules().isEmpty();
     }
 
     @Override
     public boolean contains(final Object o) {
-        this.cacheModules();
-        return this.cachedModules.contains(o);
+        return this.cachedModules().contains(o);
     }
 
     @Override
     public Iterator<Module> iterator() {
-        this.cacheModules();
-        return this.cachedModules.iterator();
+        return this.cachedModules().iterator();
     }
 
     @Override
     public Object[] toArray() {
-        this.cacheModules();
-        return this.cachedModules.toArray();
+        return this.cachedModules().toArray();
     }
 
     @Override
     public <T> T[] toArray(final T[] a) {
-        this.cacheModules();
-        return this.cachedModules.toArray(a);
+        return this.cachedModules().toArray(a);
     }
 
     @Override
     public boolean add(final Module module) {
-        this.cacheModules();
-        return this.cachedModules.add(module);
+        return this.cachedModules().add(module);
     }
 
     @Override
     public boolean remove(final Object o) {
-        this.cacheModules();
-        return this.cachedModules.remove(o);
+        return this.cachedModules().remove(o);
     }
 
     @Override
     public boolean containsAll(final Collection<?> c) {
-        this.cacheModules();
-        return this.cachedModules.containsAll(c);
+        return this.cachedModules().containsAll(c);
     }
 
     @Override
     public boolean addAll(final Collection<? extends Module> c) {
-        this.cacheModules();
-        return this.cachedModules.addAll(c);
+        return this.cachedModules().addAll(c);
     }
 
     @Override
     public boolean removeAll(final Collection<?> c) {
-        this.cacheModules();
-        return this.cachedModules.removeAll(c);
+        return this.cachedModules().removeAll(c);
     }
 
     @Override
     public boolean retainAll(final Collection<?> c) {
-        this.cacheModules();
-        return this.cachedModules.retainAll(c);
+        return this.cachedModules().retainAll(c);
     }
 
     @Override
     public void clear() {
-        this.cacheModules();
-        this.cachedModules.clear();
+        this.cachedModules().clear();
     }
 
-    private void cacheModules() {
+    private Collection<Module> cachedModules() {
         if (!this.cached) {
             this.cachedModules = this.dataMap.entrySet().stream()
                     .map(e -> (Module) new DefaultModule(
@@ -104,5 +91,6 @@ public final class ToModuleCollection implements Collection<Module> {
                     .collect(Collectors.toList());
             this.cached = true;
         }
+        return this.cachedModules;
     }
 }
