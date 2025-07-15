@@ -52,6 +52,21 @@ class ToModuleCollectionTest {
     }
 
     @Nested
+    class ClearAndIsEmpty {
+        @Test
+        void isEmptyAfterCleare() {
+            final Collection<Module> objectUnderTest =
+                    new ToModuleCollection(Map.of(5, List.of(0, 2)));
+            objectUnderTest.clear();
+            MatcherAssert.assertThat(
+                    "emptiness is not answered correctly",
+                    objectUnderTest.isEmpty(),
+                    Matchers.is(true)
+            );
+        }
+    }
+
+    @Nested
     class Contains {
         @Test
         void doesNotContain() {
